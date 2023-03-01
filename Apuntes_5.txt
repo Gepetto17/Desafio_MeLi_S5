@@ -1,0 +1,17 @@
+En este caso, debes desarrollar un código claro y con el diseño apropiado para generar un dataset de ítems a partir de la API de Mercado Libre.
+
+Formato del ejecutable:
+python build_dataset.py MLA
+
+Ejecute y devuelva como resultado en el mismo directorio un archivo llamado dataset.csv con los siguientes campos:
+ITEM_ID, TITLE, PRICE, DOMAIN_ID, BRAND
+
+API: https://api.mercadolibre.com/sites/MLA/search?q=tv%204k
+
+Los ítems del dataset resultante deben pertenecer a la condición de nuevos (condition=new). El site (MLA, MLB o MLM) debe ser un parámetro que tome el script como argumento posicional.
+
+Hint: La marca se encuentra dentro de attributes con el nombre de ID=BRAND.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
