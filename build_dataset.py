@@ -10,25 +10,29 @@ try:
 except:
     search = "tv 4k"
 search = urllib.parse.quote(search)
-api_url = f"https://api.mercadolibre.com/sites/{site}/search?q={search}"
+offset = 0
+while True:
+    try:
+        api_url = f"https://api.mercadolibre.com/sites/{site}/search?q={search}&offset={offset}"
 ########################## Request ##################################################
-try:
-    response = requests.get(api_url)
-    json = response.json()
+        response = requests.get(api_url)
+        json = response.json()
 ######################### Items_sortation ###########################################
-    items_list = []
+        items_list = []
     #print(len(json["results"]))
-    for resultado in json["results"]:
-        if resultado["condition"] == "new":
-            aux = 0
-            while resultado["attributes"][aux]["id"] != "BRAND":
-                aux += 1
-            items_list.append([resultado["id"], resultado["title"], resultado["price"], resultado["domain_id"], resultado["attributes"][aux]["value_name"]])
+        for resultado in json["results"]:
+            if resultado["condition"] == "new":
+                aux = 0
+                while resultado["attributes"][aux]["id"] != "BRAND":
+                    aux += 1
+                items_list.append([resultado["id"], resultado["title"], resultado["price"], resultado["domain_id"], resultado["attributes"][aux]["value_name"]])
 ########################## Format_and_exportation ###################################
-    with open("dataset.csv","w", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerows(items_list)
+        with open("dataset.csv","a", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerows(items_list)
+        offset += 50
 ########################## Error_handle #############################################
-except:
-    print(site, "no es un sitio válido.")
+    except:
+        print(f"Si se produjo un archivo de salida, se alcanzó el límite público de peticiones de la API. Si no, {site} no es un sitio válido.")
+        break
 ########################## End_of_script ############################################
